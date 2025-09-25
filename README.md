@@ -27,6 +27,16 @@ npm run build
 npm run preview
 ```
 
+### Backend (Contact API)
+- Create a `.env` file in project root with:
+  - `MONGODB_URI=your_mongodb_connection_string`
+  - `PORT=5000`
+- Start dev (runs API + Vite):
+```bash
+npm run dev
+```
+- The frontend calls `POST /api/contact`; Vite proxies to the API server.
+
 ## Project Structure
 ```text
 src/
@@ -36,6 +46,9 @@ src/
   App.jsx          # App composition
   main.jsx         # Vite entry
   index.css        # Tailwind entry
+server/
+  index.js         # Express app and routes
+  models/Message.js# Mongoose model for contact messages
 ```
 
 ## Customize Content

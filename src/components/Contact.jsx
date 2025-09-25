@@ -13,6 +13,7 @@ const Contact = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,16 +26,31 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Failed to send message');
+      }
+
       setIsSubmitting(false);
       setSubmitStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
-      
-      // Reset status after 3 seconds
+
       setTimeout(() => setSubmitStatus('idle'), 3000);
-    }, 1000);
+    } catch (err) {
+      setIsSubmitting(false);
+      setSubmitStatus('error');
+      setErrorMessage(err.message || 'Something went wrong');
+    }
   };
 
   const socialLinks = [
@@ -264,6 +280,15 @@ const Contact = () => {
                     className="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg"
                   >
                     Thank you! Your message has been sent successfully.
+                  </motion.div>
+                )}
+                {submitStatus === 'error' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg"
+                  >
+                    {errorMessage}
                   </motion.div>
                 )}
               </div>

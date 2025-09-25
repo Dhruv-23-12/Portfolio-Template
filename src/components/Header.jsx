@@ -34,11 +34,11 @@ const Header = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/90 backdrop-blur-md shadow-lg'
+          ? 'bg-white/90 backdrop-blur-md shadow-md border-b border-gray-100'
           : 'bg-transparent'
       }`}
     >
-      <nav className="container-max section-padding">
+      <nav className="container-max py-3 md:py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0">
@@ -48,7 +48,7 @@ const Header = () => {
                 e.preventDefault();
                 scrollToSection('#home');
               }}
-              className="text-2xl font-bold gradient-text"
+              className="text-xl md:text-2xl font-bold gradient-text"
             >
               Portfolio
             </a>
@@ -56,7 +56,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+            <div className="ml-6 md:ml-10 flex items-center space-x-4 md:space-x-8">
               {navItems.map((item) => (
                 <a
                   key={item.name}
@@ -65,7 +65,7 @@ const Header = () => {
                     e.preventDefault();
                     scrollToSection(item.href);
                   }}
-                  className="text-gray-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
+                  className="text-gray-700 hover:text-primary-600 px-2 py-1 md:px-3 md:py-2 text-sm md:text-base font-medium transition-colors duration-200 rounded-md"
                 >
                   {item.name}
                 </a>
@@ -91,7 +91,7 @@ const Header = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white rounded-lg shadow-lg mt-2">
+            <div className="px-2 pt-2 pb-2 space-y-1 sm:px-3 bg-white rounded-lg shadow-lg mt-2 divide-y divide-gray-100">
               {navItems.map((item) => (
                 <a
                   key={item.name}
